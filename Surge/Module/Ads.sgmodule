@@ -1,0 +1,91 @@
+[Url Rewrite]
+
+^http:\/\/.+/O2SysMedia/AdvertAudio/DearCustomer.mp3 - reject
+^http[s]?:\/\/openapi\.mysteel\.com/v5/getAdv.htm - reject
+^http[s]?.+ulogs.umeng.com - reject
+^http[s]?.+gslbali.ximalaya.com - reject
+^http[s]?.+adse.ximalaya.com - reject
+^http[s]?.+gslbtx.ximalaya.com - reject
+^http[s]?.+location.ximalaya.com - reject
+^http[s]?.+passport.ximalaya.com - reject
+^http[s]?.+adbehavior.ximalaya.com - reject
+^http[s]?.+ad.ximalaya.com - reject
+^http[s]?.+audid-api.taobao.com - reject
+
+[Script]
+
+#喜马拉雅 (如果无效hostname添加个*1*)
+xmly = type=http-request,pattern=^http[s]?:\/\/((.+ximalaya.+)|(.+xmcdn.+))mobile-play.+$,requires-body=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/xmly.js
+ximalaya = type=http-response,pattern=^http[s]?:\/\/((.+ximalaya.+)|(.+xmcdn.+))(product/info|/mobile-user/v2/homePage|/vip/v1/recommand/ts|mobile-playpage/playpage/tabs|/mobile-album/album/page/ts|mobile/v1/album/track/ts|product/promotion/v./whole/album/\d+/price/dynamic/ts|business-vip-presale-mobile-web/page/ts).*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/ximalaya.js
+#喜马拉雅儿童版
+xmlyet = type=http-request,pattern=^http[s]?:\/\/((.+ximalaya.+)|(.+xmcdn.+))(queryTrackRecordsByAlbumIdAndUid|album\/trackRecord\/querySampleTrack|album\/trackRecord\/palyTrack).*$,requires-body=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/xmlyet.js
+xmet = type=http-response,pattern=^http[s]?:\/\/((.+ximalaya.+)|(.+xmcdn.+))(album\/v2\/trackRecord\/queryTrackRecordsByAlbumIdAndUid|user\/member\/page\/productdetails).*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/xmet.js
+#哔哩哔哩(已不在此库更新!请添加作者)
+blbl = type=http-request,pattern=^http[s]?:\/\/((app|api)\.(\w{2,15})?\.(com|cn)).*player\.(v3|v2|v1).Play(URL|View).*$,requires-body=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/blbl.js
+#哔站1080p+解锁
+BLBLHD = type=http-response,pattern=^http[s]?:\/\/.+bilibili.+((pgc\/player\/api\/playurl)|(x\/v2\/account\/myinfo\?)|(x\/v2\/account/mine\?)).*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/BLBLHD.js
+#醒图(目前稳定)
+Xuid = type=http-request,pattern=^http[s]?:\/\/commerccd-api.faceu.mobi\/commerce\/v1\/subscription\/user_info.*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/Xuid.js
+Xtu = type=http-response,pattern=^http[s]?:\/\/.+((retouchpics)|(faceu)).(com|cn|mobi)\/.+user.*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/Xtu.js
+#全民幸福社
+qmxfs = type=http-response,pattern=^http:\/\/api\.qmxfs\.com\/v003/user\/queryAccountInfo\.json,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/qmxfs.js
+#樊登读书
+FD = type=http-response,pattern=^http[s]?:\/\/.+dushu.+(v101|v100|program\/v100)\/(content|play\/duration|index|list|userInfo|vipInfo|info|ceiltip|mainList|getMarketInfoByType|share).*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/FD.js
+#网易云解锁VIP直接听
+wyun = type=http-request,pattern=^http[s]?:\/\/.+music.+(player/url|playlist|entrance|/eapi/search/).*$,requires-body=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/wyun.js
+#有书
+youshu = type=http-response,pattern=^http[s]?:\/\/.+youshu.+(m/userinfo/get|/m/user/count|common/elite_page_content|/mp/item/subpage_pack_list|m/xplan_page/info|m/media/play_list|/m/plan_page/info|/app/gongdu/pack_list|/m/common/middle_page_list).*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/youshu.js
+#酷我音乐
+kw = type=http-response,pattern=^http[s]?:\/\/.*kuwo.*(/vip/enc/user/vip|/a.p|/vip/v2/user/vip|/vip/v2/sysinfo|/vip/v2/theme|AdService/kaiping/|/music.pay|player/getStyleListByModel).*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/kw.js
+#keep
+keep = type=http-response,pattern=^http[s]?:\/\/.+keep.+(athena/v7/people/my|/ad/preload|details|preview|/start|liveStream/schedule|course/v3/plans|/home/prime/page).*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/keep.js 
+#氧气听书
+yqts = type=http-response,pattern=^http[s]?:\/\/api.o2ting.com\/api\/V2.+(ListByIndex|Detail|user/GetUserInfo).json,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/yqts.js
+#云听解锁
+yunt = type=http-response,pattern=^http[s]?:\/\/(getway|ytapi).radio.(cn|com)(/app[a-z0-9/]+|/ytsrv/srv/appUser/getUserInfoH5).*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/yunt.js
+#百度网盘在线播放速度，清晰度
+panda = type=http-response,pattern=^https:\/\/pan\.baidu\.com\/rest\/\d\.\d\/membership\/user,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/panda.js
+#悟饭{趣玩|游戏厅|酷玩盒|掌悦}
+wufan = type=http-response,pattern=^http[s]?:\/\/.+user/ios_store_pay_edition.+(check_members_identity_v2|get_member_info),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/wufan.js
+#我的钢铁
+gtie = type=http-request,pattern=^http[s]?:\/\/openapi\.mysteel\.com\/v5\/(market\/getMarkets|article\/getContent).htm,requires-body=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/gtie.js
+wode = type=http-response,pattern=^http[s]?:\/\/openapi\.mysteel\.com\/v4\/user\/info\/my\.htm,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/wode.js
+#知音漫客
+zymk = type=http-response,pattern=^http[s]?:\/\/.+.zymk.+(getcomicinfo|getuserinfo|gift_givegifts|v5/addgold|getappadvertise).*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/zymk.js
+#百度网盘
+panda = type=http-response,pattern=^https:\/\/pan\.baidu\.com\/rest\/\d\.\d\/membership\/user,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/panda.js
+#蜗牛助眠
+woniu = type=http-response,pattern=^http[s]?:\/\/((.+snailsleep)|(snailsleep)).net.*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/woniu.js
+#贝乐虎启蒙 (育儿)
+beile = type=http-response,pattern=^http[s]?:\/\/.*ubestkid.*(getUserProfile|course|api/v1/featureV2|xtapi/zhuanlan|/api/v1/bv/videoV2).*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/beile.js
+#彩云天气
+cytq = type=http-response,pattern=^http[s]?:\/\/biz\.caiyunapp\.com\/v2\/user.*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/cytq.js
+#绅士
+shens = type=http-response,pattern=^http[s]?:\/\/gentlemanapp\.lingdu2019.cn\/ios_api\/(my_home\/my_detail|portrait\/goods_detail|publish\/yuepai_detail),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/shens.js
+#91次元-在线观看地址: https://cyh6z.com/line?
+91cy = type=http-request,pattern=^http[s]?:\/\/91[a-zA-Z0-9].+(com|cc|cn)\/h5\/system\/info.*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/91cy.js
+#泡芙短视频-下载地址: https://pfdda.fit/?pc=2PZC99
+paofu = type=http-request,pattern=^http[s]?:\/\/.*pf.+(com|cc|cn)\/api\/app\/vid\/h5\/m3u8\/.+\.m3u8\?token\=.*$,requires-body=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/paofu.js
+#推girl下载地址: https://tuigirl.live/#/?invite=091W12
+tuigirl = type=http-request,pattern=^http[s]?:\/\/.+twittme.+\/resources\/v18\/.+\/index.m3u8,requires-body=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/tuigirl.js
+#XBoy官网: https://www.xboy6.live/?ivcode=U5K9 。ipa下载: https://wwr.lanzoui.com/xbss
+Xboy = type=http-response,pattern=^http[s]?:\/\/.+((xo2xo)|(hnyiya)).(live|com)\/api\/(Account\/IndexDetail|movie\/DetailInfo|movie\/watch).*$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/Xboy.js
+#色中色下载地址- https://oznias.fit/?pc=47QNSE, 
+szs = type=http-request,pattern=^http[s]?:\/\/.+sez.+m3u8.+m3u8.+,requires-body=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/szs.js
+byxt = type=http-request,pattern=^http[s]?:\/\/commerce-api.faceu.mobi\/commerce\/v1\/subscription\/user_info.*$,requires-body=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/byxt.js
+#绳师SM在线观看地址-https://h5.sssmapp.com/#/?
+sshism = type=http-request,pattern=^http[s]?:\/\/s400\.sssm\.info\/api\/videos\/.*$,requires-body=0,script-path=https://raw.githubusercontent.com/WeiRen0/LSPP/main/sshism.js
+#AnTv在线观看地址-https://h5.tvtm88.com/#/?
+antv = type=http-request,pattern=^http[s]?:\/\/.+antvapp.+\/api\/videos\/.*$,requires-body=0,script-path=https://raw.githubusercontent.com/WeiRen0/LSPP/main/antv.js
+#91视频下载地址: https://app.jiqg.xyz/i-WTDR2KP
+91 = type=http-request,pattern=^http[s]?:\/\/.+((ppapi)|(17gwl)|(sgyrc)|(mnghx)|(czbt)|(jtshuzhiwa)).(info|cc|com)\/m_sns\/(video\/apply_play_permission|film).*$,requires-body=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/91.js
+#Milk下载地址:https://milk.kzk61yo.cn/?qcode=mm793609
+Milk = type=http-response,pattern=^https:\/\/ppt.fuaybr.cn\/\/(Api|Milk)\/(getuserinfo|getstartup|getvideotop),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/Milk.js
+#黑料社下载地址: hlsapp.cc/?pc=85AAYK
+hls = type=http-request,pattern=^http[s]?:\/\/wbapi\.wbbcv\.com\/api\/app\/vid\/h5\/m3u8\/.+m3u8.+token.*$,requires-body=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/hls.js
+#快手约炮(解锁轻量版) 下载地址 - https://eg2xe6.com/?pc=WVKDZYAN
+Kuaiyp = type=http-request,pattern=^http[s]?:\/\/h5\.zhihuav\.com\/api\/h5app\/media\/m3u8.+m3u8.+timestamp.+sign.+nonce.*$,requires-body=0,script-path=https://raw.githubusercontent.com/WeiRen0/Scripts/main/Kuaiyp.js
+
+[MITM]
+
+hostname = %APPEND% gentlemanapp*,*mysteel*,*ubestkid*,91*.com,*pfd*,*twittme*,*zhihuav*,*wbbcv*,180.153.255.*,180.153.140.*,180.153.250.*,*fuaybr*,appapi*,*17gwl*,*sgyrc*,*mnghx*,*czbt*,*jtshuzhiwa*,114.80.*.*,mobile.ximalaya.com,*xmcdn*,*youshu*,*snailsleep*,180.153.*.*,pan.baidu.com,*.caiyunapp.*,*xo2xo*,*hnyiya*,sjk*,*sez*,*qmxfs*,*.ximalaya.*,*faceu*,*retouchpics*,51h*,*rwut*,*luoli*,*cmw*,*.zymk.cn,*antv*,*sssm*,iosv2.cjapi.papa21.com,*wufan*,pan.baidu.com,*.o2ting.*,*.radio.*,*keep*,*kuwo*,*xima*,*.biliapi.*,*.bilibili.*,*dushu*,*153*,*.music.163.com
